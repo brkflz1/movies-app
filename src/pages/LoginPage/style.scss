@@ -1,0 +1,22 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    padding: 0 248px;
+
+    .login-title {
+        color: #fff;
+    }
+
+    .login-form {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+
+        .form-label {
+            color: #fff;
+        }
+    }
+}

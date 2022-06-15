@@ -1,11 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+
+import postCreateUser from '../../../services/postCreateUser'
 
 const initialState = {
   auth: false,
+  createUserLoading: false,
+  createUserError: false,
+  createUserErrorResponse: null,
+  createUserData: null
+
 }
 
+export const requestCreateUser = createAsyncThunk(
+  "auth/requestCreateUser",
+  async (queryParams) => {
+    const response = await postCreateUser(queryParams)
+    return response
+  }
+)
+
 export const authSlice = createSlice({
-  name: 'counter',
+  name: 'auth',
   initialState,
   reducers: {
     // increment: (state) => {
@@ -21,6 +36,24 @@ export const authSlice = createSlice({
     // incrementByAmount: (state, action) => {
     //   state.value += action.payload
     // },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(requestCreateUser.pending, (state) => {
+        state.createUserLoading = true
+      })
+      .addCase(requestCreateUser.fulfilled, (state, action) => {
+        state.createUserLoading = false
+        state.createUserError = false
+        state.createUserData = action.payload
+
+      })
+      .addCase(requestCreateUser.rejected, (state, action) => {
+        state.createUserLoading = false
+        state.createUserData = null
+        state.createUserError = true
+        state.createUserErrorResponse = action.error.message
+      })
   },
 })
 

@@ -1,1 +1,1 @@
-export const AUTH_ROOT = 'https://reqres.in'
+export const AUTH_ROOT = 'https://reqres.in/api'
