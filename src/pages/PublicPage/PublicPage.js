@@ -1,22 +1,20 @@
-import React from 'react'
-
-// Redux
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-
-// Images
+import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
-
-// Styles
 import './style.scss'
-
-// Components
 import SignupPage from '../SignupPage/SignupPage'
-import LoginPage from '../LoginPage/LoginPage'
-
 
 export default function PublicPage() {
- // Global State
- const createUserData = useSelector(state => state.auth.createUserData)
+  // Global State
+  const createUserData = useSelector(state => state.auth.createUserData)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (createUserData) {
+      navigate("/login", { replace: true })
+    }
+  }, [createUserData, navigate])
 
   return (
     <div className='public-page-container'>
@@ -24,14 +22,7 @@ export default function PublicPage() {
         <img src={logo} alt='Logo' />
         <h2 className='greetings'>Hi, Welcome to the Movies App</h2>
       </div>
-
-      {
-        createUserData ? 
-        <LoginPage />
-        :
-        <SignupPage />
-      }
-      
+      <SignupPage />
     </div>
   )
 }

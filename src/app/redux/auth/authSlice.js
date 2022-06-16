@@ -1,13 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import postCreateUser from '../../../services/postCreateUser'
+import postLoginUser from '../../../services/postLoginUser'
 
 const initialState = {
   auth: false,
   createUserLoading: false,
   createUserError: false,
   createUserErrorResponse: null,
-  createUserData: null
+  createUserData: null,
+  loginUserLoading: false,
+  loginUserData: null,
+  loginUserError: true,
+  loginUserErrorResponse: null
 
 }
 
@@ -15,6 +20,14 @@ export const requestCreateUser = createAsyncThunk(
   "auth/requestCreateUser",
   async (queryParams) => {
     const response = await postCreateUser(queryParams)
+    return response
+  }
+)
+
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (queryParams) => {
+    const response = await postLoginUser(queryParams)
     return response
   }
 )
@@ -53,6 +66,21 @@ export const authSlice = createSlice({
         state.createUserData = null
         state.createUserError = true
         state.createUserErrorResponse = action.error.message
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loginUserLoading = true
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loginUserLoading = false
+        state.loginUserError = false
+        state.loginUserData = action.payload
+        state.auth = true
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loginUserLoading = false
+        state.createUserData = null
+        state.loginUserError = true
+        state.loginUserErrorResponse = action.error.message
       })
   },
 })

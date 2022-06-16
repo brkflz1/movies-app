@@ -1,11 +1,10 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 50%;
-    padding: 0 248px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    height: 100vh;
 
     .login-title {
+        margin-top: 148px;
         color: #fff;
     }
 

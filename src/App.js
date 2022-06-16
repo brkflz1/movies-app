@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<PublicPage isBerk={true} />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<PublicPage />} />
         <Route
-            path="/movies"
+            path="/"
             element={
               <RequireAuth>
                 <MoviesPage />
