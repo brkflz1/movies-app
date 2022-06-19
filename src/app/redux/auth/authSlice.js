@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import postCreateUser from '../../../services/postCreateUser'
-import postLoginUser from '../../../services/postLoginUser'
+import getTokenService from '../../../services/getTokenService'
+import getAuthenticateService from '../../../services/getAuthenticateService'
 
 const initialState = {
   auth: false,
@@ -10,7 +11,7 @@ const initialState = {
   createUserErrorResponse: null,
   createUserData: null,
   loginUserLoading: false,
-  loginUserData: null,
+  requestToken: null,
   loginUserError: true,
   loginUserErrorResponse: null
 
@@ -27,7 +28,19 @@ export const requestCreateUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (queryParams) => {
-    const response = await postLoginUser(queryParams)
+    const requestToken = await getTokenService()
+    
+    if (requestToken.status !== 200) {
+      return { error: 'Can not get the token!' }
+    }
+    return requestToken
+  }
+)
+
+export const setAuthentication = createAsyncThunk(
+  "auth/setAuthentication",
+  async (token) => {
+    const response = await getAuthenticateService(token)
     return response
   }
 )
@@ -36,19 +49,6 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
-    //   // doesn't actually mutate the state because it uses the Immer library,
-    //   // which detects changes to a "draft state" and produces a brand new
-    //   // immutable state based off those changes
-    //   state.value += 1
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1
-    // },
-    // incrementByAmount: (state, action) => {
-    //   state.value += action.payload
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -73,14 +73,31 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loginUserLoading = false
         state.loginUserError = false
-        state.loginUserData = action.payload
+        const { data: { request_token } } = action.payload
         state.auth = true
+        state.requestToken = request_token
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loginUserLoading = false
         state.createUserData = null
         state.loginUserError = true
         state.loginUserErrorResponse = action.error.message
+      })
+      .addCase(setAuthentication.pending, (state) => {
+        state.authenticateLoading = true
+      })
+      .addCase(setAuthentication.fulfilled, (state, action) => {
+        state.authenticateLoading = false
+        state.authenticateError = false
+        debugger
+        state.authanticationResponse = action.payload
+      })
+      .addCase(setAuthentication.rejected, (state, action) => {
+        state.authenticateLoading = false
+        state.authanticationResponse = null
+        state.authenticateError = true
+        debugger
+        state.authenticaterResponse = action.error.message
       })
   },
 })

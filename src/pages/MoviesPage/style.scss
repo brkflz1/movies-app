@@ -2,13 +2,35 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #000;
+
+    header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        color: #fff;
+        padding-top: 48px;
+    }
+
+    .movies-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding: 24px;
+
+        .movie-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            height: auto;
+        }
+    }
 
     .movies-footer {
         display: flex;
         justify-content: flex-end;
-        position: fixed;
         width: 100%;
         background-color: rgb(48, 48, 48);
         padding: 24px;

@@ -1,18 +1,15 @@
-
 import axios from 'axios'
-import { MOVIES_ROOT } from './config'
+import { MOVIE_DB } from './config'
 
-
-export default async function postCreateUser(body) {
+export default async function getAuthenticateService(token) {
     try {
         const response = await axios({
             method: 'get',
-            url: MOVIES_ROOT + '/3/discover/movie?sort_by=popularity.desc&api_key=6cd7f7bf67d197108ceb1be22406ba3a',
+            url: MOVIE_DB + `/authenticate/${token}`,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }, 
-            data: body
+            }
         });
         
         return response

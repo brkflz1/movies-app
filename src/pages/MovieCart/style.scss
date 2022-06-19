@@ -1,0 +1,24 @@
+.movie {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 8px;
+
+    img {
+        max-width: 300px;
+    }
+
+    .title {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding-top: 24px;
+
+        span {
+            color: rgb(46, 134, 68);
+        }
+    }
+}

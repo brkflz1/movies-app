@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
 import './style.scss'
-import SignupPage from '../SignupPage/SignupPage'
+import LoginPage from '../LoginPage/LoginPage'
 
 export default function PublicPage() {
   // Global State
@@ -22,7 +22,7 @@ export default function PublicPage() {
         <img src={logo} alt='Logo' />
         <h2 className='greetings'>Hi, Welcome to the Movies App</h2>
       </div>
-      <SignupPage />
+      <LoginPage />
     </div>
   )
 }

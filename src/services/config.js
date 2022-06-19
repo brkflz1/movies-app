@@ -1,3 +1,5 @@
 export const AUTH_ROOT = 'https://reqres.in/api'
-export const MOVIES_ROOT = 'https://api.themoviedb.org/'
-export const IMG_API = 'https://image.tmdb.org'
+export const MOVIES_ROOT = 'https://api.themoviedb.org'
+export const IMG_API = 'https://image.tmdb.org/t/p/w1280'
+export const MOVIE_DB = 'https://www.themoviedb.org'
+export const MOVIES_DEVELOPERS = 'https://api.themoviedb.org'

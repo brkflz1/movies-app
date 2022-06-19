@@ -73,7 +73,7 @@ export default function LoginPage() {
             variant="primary"
             onClick={handleLogin}
           >
-            Sign Up
+            Login
           </Button>
         </Form>
       </div>

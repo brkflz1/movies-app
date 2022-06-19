@@ -44,7 +44,8 @@ export const moviesSlice = createSlice({
       .addCase(getMoviesList.fulfilled, (state, action) => {
         state.moviesListLoading = false
         state.moviesListError = false
-        state.moviesListData = action.payload
+        const { data: { results } } = action.payload
+        state.moviesListData = results
       })
       .addCase(getMoviesList.rejected, (state, action) => {
         state.moviesListLoading = false
